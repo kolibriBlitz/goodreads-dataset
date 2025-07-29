@@ -28,6 +28,9 @@ df = load_data()
 # Do some light data cleaning
 df["num_pages"]=df.num_pages.fillna('0')
 df["num_pages"]=df.num_pages.astype(int)
+df["similar_books"]=df.similar_books.fillna('0')
+df["similar_books"] = df.similar_books.str.split(', ').apply(lambda x: [int(n) for n in x] if x != ['0'] else [])
+
 
 # Split genres string column into individual genres stored as a list
 df['genres'] = df['genres'].str.split(',').apply(
@@ -43,12 +46,13 @@ pages = st.slider("Length", df["num_pages"].min(),
 
 # Show a slider with the number of stars
 stars = st.slider("Rating",0.0,5.0,help="Average star rating")
-
+#st.write(df['avg_rating'] >= stars)
 # Filter the dataframe based on the widget input and reshape it.
 df_filtered = df[
-    df['genres'].apply(lambda g_list: any(genre in g_list for genre in genres)) &
-    df['num_pages'].between(pages[0], pages[1]) & df['avg_rating'] >= stars
+    (df['genres'].apply(lambda g_list: all(genre in g_list for genre in genres))) &
+    (df['num_pages'].between(pages[0], pages[1])) & (df['avg_rating'] > stars)
 ]
+
 
 # possible reshape of dataframe
 
@@ -59,7 +63,36 @@ st.dataframe(
     df_filtered,
     use_container_width=True, column_order=("original_title","author","num_pages","avg_rating"),
     column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
-        "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")},
+        "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")},hide_index=True
 )
+
+# Function to show similar books to a selected title
+def get_similar(title,df=df):
+    '''Function accepts a string of book title. The cell in the dataframe containing the list of similar books for
+    title is stored in a variable. 
+    Function returns a dataframe containing information for similar books found.'''
+
+    target = df.loc[df['original_title'] == title]
+
+    if target.empty:
+        st.write("Sorry, book not found. 😔")
+        return pd.DataFrame()  # or None, based on your preference
+
+    # Extract the list of similar book IDs from the 'similar_books' column
+    similar_list = target.iloc[0]['similar_books']
+
+    # Check if similar_list is empty or null
+    if not similar_list or (isinstance(similar_list, float) and pd.isna(similar_list)):
+        st.write("😔 Sorry, there are no similar book suggestions.")
+        return pd.DataFrame()
+
+    # Filter df where work_id is in similar_list
+    result = df.loc[df['work_id'].isin(similar_list)]
+    st.dataframe(result, use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating"),
+                                    column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
+                                        "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")}, hide_index=True)
+    
+   
+
 
 # Display the data as an  chart using 
