@@ -3,8 +3,8 @@ import pandas as pd
 import streamlit as st
 
 # Show the page title and description.
-st.set_page_config(page_title="Movies dataset", page_icon="🎬")
-st.title("🎬 Movies dataset")
+st.set_page_config(page_title="Goodreads dataset", page_icon="📚")
+st.title("📚 Goodreads dataset")
 st.write(
     """
     This app visualizes data from [Goodreads](https://www.kaggle.com/datasets/melisandefritzsche/book-reviews).
@@ -25,29 +25,40 @@ def load_data():
 
 df = load_data()
 
+# Do some light data cleaning
+df["num_pages"]=df.num_pages.fillna('0')
+df["num_pages"]=df.num_pages.astype(int)
+
+# Split genres string column into individual genres stored as a list
+df['genres'] = df['genres'].str.split(',').apply(
+    lambda lst: [genre.strip() for genre in lst])
+
 # Show a multiselect widget with the genres using `st.multiselect`.
-genres = st.multiselect(
-    "Genres",
-    df.genres.unique(),
-    ["Action", "Adventure", "Biography", "Comedy", "Drama", "Horror"],
-)
+genres = st.multiselect("Genre", df['genres'].explode().unique(), [])
+
 
 # Show a slider widget with the years using `st.slider`.
-pages = st.slider("Length", 0, 2000, (0, 2000))
+pages = st.slider("Length", df["num_pages"].min(),
+                  df["num_pages"].max(),(0,2201))
+
+# Show a slider with the number of stars
+stars = st.slider("Rating",0,5,(0,5))
 
 # Filter the dataframe based on the widget input and reshape it.
-df_filtered = df[(df["genre"].isin(genres)) & (df["num_page"].between(pages[0], pages[1]))]
-df_reshaped = df_filtered.pivot_table(
-    index="pages", columns="genre", values="gross", aggfunc="sum", fill_value=0
-)
-df_reshaped = df_reshaped.sort_values(by="pages", ascending=False)
+df_filtered = df[
+    df['genres'].apply(lambda g_list: any(genre in g_list for genre in genres)) &
+    df['num_pages'].between(pages[0], pages[1])
+]
+
+
+
 
 
 # Display the data as a table using `st.dataframe`.
 st.dataframe(
-    df_reshaped,
+    df_filtered,
     use_container_width=True,
-    column_config={"pages": st.column_config.TextColumn("Pages")},
+    column_config={"original_title": st.column_config.TextColumn("Title")},
 )
 
 # Display the data as an  chart using 
