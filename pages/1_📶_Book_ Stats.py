@@ -75,11 +75,13 @@ st.markdown("## 🎮Interactive Graphs")
 chart_type=st.radio('Choose your visual',['Bar','Scatter','Pivot Table'])
 genre_list=st.multiselect('Choose a genre',df['Genre'].unique())
 author_list=st.multiselect('Choose an author',df['Author'].sort_values(ascending=True))
-length=st.slider('Filter by page length?',df['Length'].min(),df['Length'].max())
-rating=st.select_slider('Select a star rating',['1-star','2-star','3-star','4-star','5-star'])
+length = st.slider('Filter by page length?',
+                   df['Length'].min(), df['Length'].max(), (0, 2201))
+rating=st.select_slider('Select a star rating',['1-Star','2-Star','3-Star','4-Star','5-Star'])
 
 df_filtered = df[
-    (df['Genre'].apply(lambda g_list: all(genre in g_list for genre in genre_list))) & (df['Author'].apply(lambda g_list: all(author in g_list for author in author_list))) &
+    (df['Genre'].apply(lambda g_list: all(genre in g_list for genre in genre_list))) &
+    (df['Author'].isin(author_list) if author_list else True) &
     (df['Length'].between(length[0], length[1])) & (df[rating])
 ]
 
