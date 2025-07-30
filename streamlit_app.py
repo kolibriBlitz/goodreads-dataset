@@ -4,8 +4,8 @@ import pandas as pd
 import streamlit as st
 
 # Show the page title and description.
-st.set_page_config(page_title="Goodreads dataset", page_icon="📚")
-st.title("📚 Goodreads dataset")
+st.set_page_config(page_title="Goodreads Book List", page_icon="📚")
+st.title("📚 Goodreads Book List")
 st.write(
     """
     This app visualizes data from [Goodreads](https://www.kaggle.com/datasets/melisandefritzsche/book-reviews).
@@ -14,7 +14,8 @@ st.write(
     """
 )
 
-st.sidebar.success('Check this out')
+st.sidebar.header("Goodreads Dataset")
+st.sidebar.success('Choose your adventure')
 
 # Load the data from a CSV. We're caching this so it doesn't reload every time the app
 # reruns (e.g. if the user interacts with the widgets).
@@ -72,7 +73,7 @@ def get_similar(title, df=df):
     target = df.loc[df['original_title'].str.strip() == title]
 
     if target.empty:
-        st.write(f"Sorry, {target} not found. 😔")
+        st.write(f"Sorry, {target['original_title'].iloc[0]} not found. 😔")
         return pd.DataFrame()  # or None, based on your preference
 
     # Extract the list of similar book IDs from the 'similar_books' column
@@ -80,7 +81,7 @@ def get_similar(title, df=df):
 
     # Check if similar_list is empty or null
     if not similar_list or (isinstance(similar_list, float) and pd.isna(similar_list)):
-        st.write(f"😔 Sorry, there are no similar book suggestions for {target['original_title'].iloc[0]}.")
+        st.write(f"😔 Sorry, there are no similar book suggestions for {target['original_title'].iloc[0]} from Goodreads.")
         st.markdown("---")
         return pd.DataFrame()
 
@@ -89,7 +90,7 @@ def get_similar(title, df=df):
     
     # Display results all nice and pretty.
     st.write(
-        f"🤓 Yay! Here are similar book suggestions for {target['original_title'].iloc[0]}.")
+        f"🤓 Yay! Here are similar book suggestions for {target['original_title'].iloc[0]} from Goodreads.")
     st.dataframe(result, use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating","genres"),
                  column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
                     "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating"),"genres":st.column_config.TextColumn("Genre")}, hide_index=True)
