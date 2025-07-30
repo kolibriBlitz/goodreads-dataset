@@ -3,7 +3,7 @@ Based on Streamlit's Movie dataset template
 
 A simple Streamlit app showing book data from [Gooderads](https://www.kaggle.com/datasets/). 
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)]()
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://maven-goodreads-july2025.streamlit.app/)
 
 ### How to run it on your own machine
 
