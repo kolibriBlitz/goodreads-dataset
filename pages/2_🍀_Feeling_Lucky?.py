@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import random
 
-st.set_page_config('Feeling Lucky?','🍀')
+st.set_page_config('Feeling Lucky?', '🍀')
 
 st.title('Surprise Me!')
 st.markdown('## Random Reading List Generator')
@@ -21,9 +21,11 @@ def load_data():
     # df2 = pd.read_csv("data/goodreads_reviews.csv")
     return df1
 
-df=load_data()
 
-num_books=st.number_input('How many books do you want to read?',1,13525,int)
+df = load_data()
+book_list = df
+# Define random selection function
+
 
 def surprise_me(n):
     '''
