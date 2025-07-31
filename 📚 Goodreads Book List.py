@@ -21,7 +21,7 @@ st.sidebar.success('Choose your adventure')
 # reruns (e.g. if the user interacts with the widgets).
 @st.cache_data
 def load_data():
-    df1 = pd.read_csv("data/goodreads_works.csv")
+    df1 = pd.read_csv("data/cleaned_works.csv")
     # df2 = pd.read_csv("data/goodreads_reviews.csv")
     return df1
 
