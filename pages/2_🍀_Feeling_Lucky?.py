@@ -17,7 +17,7 @@ st.markdown(
 
 @st.cache_data
 def load_data():
-    df1 = pd.read_csv("data/cleaned_book_list.csv", index_col='work_id')
+    df1 = pd.read_csv("data/cleaned_works.csv", index_col='work_id')
     # df2 = pd.read_csv("data/goodreads_reviews.csv")
     return df1
 
