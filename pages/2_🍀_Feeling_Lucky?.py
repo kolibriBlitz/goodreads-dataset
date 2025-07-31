@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-import numpy as pt
+import numpy as np
+import random
 
 st.set_page_config('Feeling Lucky?','🍀')
 
