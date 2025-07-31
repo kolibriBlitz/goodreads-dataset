@@ -15,7 +15,7 @@ st.markdown(
 # reruns (e.g. if the user interacts with the widgets).
 @st.cache_data
 def load_data():
-    df1 = pd.read_csv("data/cleaned_book_list.csv",index_col='work_id')
+    df1 = pd.read_csv("data/cleaned_works.csv",index_col='work_id')
     # df2 = pd.read_csv("data/goodreads_reviews.csv")
     return df1
 
@@ -56,7 +56,7 @@ genre_length = genre_length.sort_values('Length', ascending=False)
 bar = alt.Chart(genre_length).mark_bar().encode(
     x=alt.X('Length:Q', title='Average Book Length'),
     y=alt.Y('Genre:N', sort='-x', title='Genre'),
-    color=alt.Color('Length:Q', scale=alt.Scale(scheme='blues')),
+    color=alt.Color('Length:Q', scale=alt.Scale(scheme='darkmulti')),
     tooltip=['Genre', 'Length']
 ).properties(
     title='Average Book Length by Genre',
@@ -97,7 +97,7 @@ else:
         bar = alt.Chart(genre_length).mark_bar().encode(
             x=alt.X('Length:Q', title='Average Length (pages)'),
             y=alt.Y('Genre:N', sort='-x'),
-            color=alt.Color('Length:Q', scale=alt.Scale(scheme='blues')),
+            color=alt.Color('Length:Q', scale=alt.Scale(scheme='teals')),
             tooltip=['Genre', 'Length']
         ).properties(width=700, height=500)
 
@@ -125,7 +125,7 @@ else:
             x=alt.X('Star Rating:N'),
             y=alt.Y('Genre:N'),
             color=alt.Color('Average Count:Q',
-                            scale=alt.Scale(scheme='oranges')),
+                            scale=alt.Scale(scheme='plasma')),
             tooltip=['Genre', 'Star Rating', 'Average Count']
         ).properties(width=700, height=500)
 
