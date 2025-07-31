@@ -31,8 +31,6 @@ if st.checkbox("Show raw Data"):
     st.write(df)
 print(pa.__version__)
 # Do some light data cleaning
-df["num_pages"] = df.num_pages.fillna('0')
-df["num_pages"] = df.num_pages.astype(int)
 df["similar_books"] = df.similar_books.fillna('0')
 df["similar_books"] = df.similar_books.str.split(', ').apply(
     lambda x: [int(n) for n in x] if x != ['0'] else [])
