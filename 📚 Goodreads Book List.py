@@ -58,7 +58,7 @@ stars = right.slider("Rating", 0.0, 5.0, (0.0,5.0),help="Average star rating")
 # Filter the dataframe based on the widget input and reshape it.
 df_filtered = df[
     (df['genres'].apply(lambda g_list: all(genre in g_list for genre in genres))) & (df['author'].apply(lambda g_list: all(author in g_list for author in authors))) &
-    (df['num_pages'].between(pages[0], pages[1])) & (df['avg_rating'] > stars)
+    (df['num_pages'].between(pages[0], pages[1])) & (df['avg_rating'].between(stars[0], stars[1]))
 ]
 
 
