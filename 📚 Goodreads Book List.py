@@ -68,10 +68,10 @@ def get_similar(title, df=df):
     title is stored in a variable. 
     Function returns a dataframe containing information for similar books found.'''
 
-    target = df.loc[df['original_title'].str.strip() == title]
+    target = df.loc[df['Title'].str.strip() == title]
 
     if target.empty:
-        st.write(f"Sorry, {target['original_title'].iloc[0]} not found. 😔")
+        st.write(f"Sorry, {target['Title'].iloc[0]} not found. 😔")
         return pd.DataFrame()  # or None, based on your preference
 
     # Extract the list of similar book IDs from the 'similar_books' column
@@ -79,7 +79,7 @@ def get_similar(title, df=df):
 
     # Check if similar_list is empty or null
     if not similar_list or (isinstance(similar_list, float) and pd.isna(similar_list)):
-        st.write(f"😔 Sorry, there are no similar book suggestions for {target['original_title'].iloc[0]} from Goodreads.")
+        st.write(f"😔 Sorry, there are no similar book suggestions for {target['Title'].iloc[0]} from Goodreads.")
         st.markdown("---")
         return pd.DataFrame()
 
@@ -88,9 +88,9 @@ def get_similar(title, df=df):
     
     # Display results all nice and pretty.
     st.write(
-        f"🤓 Yay! Here are similar book suggestions for {target['original_title'].iloc[0]} from Goodreads.")
-    st.dataframe(result, use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating","genres"),
-                 column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
+        f"🤓 Yay! Here are similar book suggestions for {target['Title'].iloc[0]} from Goodreads.")
+    st.dataframe(result, use_container_width=True, column_order=("Title", "author", "num_pages", "avg_rating","genres"),
+                 column_config={"author": st.column_config.TextColumn(
                     "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating"),"genres":st.column_config.TextColumn("Genre")}, hide_index=True)
     st.markdown("---")
 
@@ -103,7 +103,7 @@ st.header("Book List 📖📕📙📗📘")
 checked = st.dataframe(
     df_filtered,
     use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating"),
-    column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
+    column_config={"author": st.column_config.TextColumn(
         "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")}, hide_index=True, on_select="rerun", selection_mode="multi-row"
 )
 st.session_state.selected_rows = checked.selection.rows if checked.selection.rows else []
@@ -115,7 +115,7 @@ if st.button("🔍 Find Similar Books"):
     selected_rows = checked.selection.rows
     st.session_state.selected_rows = selected_rows
     if selected_rows:
-        titles = df_filtered.iloc[selected_rows]['original_title'].tolist()
+        titles = df_filtered.iloc[selected_rows]['Title'].tolist()
         st.session_state.selected_titles = titles
     else:
         st.session_state.selected_titles = []
