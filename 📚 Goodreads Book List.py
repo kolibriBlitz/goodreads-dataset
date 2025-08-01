@@ -53,7 +53,7 @@ pages = left.slider("Length", df["num_pages"].min(),
                     df["num_pages"].max(), (0, 2201), help="Number of pages")
 
 # Show a slider widget with the number of stars
-stars = right.slider("Rating", 0.0, 5.0, help="Average star rating")
+stars = right.slider("Rating", 0.0, 5.0, (0.0,5.0),help="Average star rating")
 # st.write(df['avg_rating'] >= stars)
 # Filter the dataframe based on the widget input and reshape it.
 df_filtered = df[
@@ -102,7 +102,7 @@ st.header("Book List 📖📕📙📗📘")
 
 checked = st.dataframe(
     df_filtered,
-    use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating"),
+    use_container_width=True, column_order=("Title", "author", "num_pages", "avg_rating"),
     column_config={"author": st.column_config.TextColumn(
         "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")}, hide_index=True, on_select="rerun", selection_mode="multi-row"
 )
