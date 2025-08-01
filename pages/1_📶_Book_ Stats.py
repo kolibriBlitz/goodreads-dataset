@@ -33,7 +33,7 @@ df["genres"] = df.genres.str.split(', ').apply(
 df = df.explode("genres")
 df = df.explode("similar_books")
 df=df.drop(columns=["isbn","isbn13","image_url","description"])
-df = df.rename(columns={'original_title': 'Title', 'author':'Author',
+df = df.rename(columns={'author':'Author',
                 'original_publication_year': 'Year',
                'num_pages': 'Length','genres':'Genre', '5_star_ratings': '5-Star', '4_star_ratings': '4-Star', '3_star_ratings': '3-Star', '2_star_ratings': '2-Star', '1_star_ratings': '1-Star'})
 df=df.rename_axis('ID',axis="index")
