@@ -55,7 +55,7 @@ if st.session_state.book_list:
     st.write("Surpise! 🥳 Happy reading")
     st.dataframe(
         filtered_df,
-        use_container_width=True, column_order=("original_title", "author", "num_pages", "avg_rating"),
-        column_config={"original_title": st.column_config.TextColumn("Title"), "author": st.column_config.TextColumn(
+        use_container_width=True, column_order=("Title", "author", "num_pages", "avg_rating"),
+        column_config={"author": st.column_config.TextColumn(
             "Author"), "num_pages": st.column_config.TextColumn("Length"), "avg_rating": st.column_config.TextColumn("Average Rating")}, hide_index=True
     )
