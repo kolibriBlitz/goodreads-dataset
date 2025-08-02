@@ -60,7 +60,7 @@ bar = alt.Chart(genre_length).mark_bar().encode(
 st.markdown("## 📊Bar Charts")
 if st.checkbox("Show me a graph of book lengths by genre"):
     st.bar_chart(df, x='Length',y='Genre')
-    st.caption('Yes, I know that this isn't a true bar graph, but I think it's a cool visualization.')
+    st.caption("Yes, I know that this isn't a true bar graph, but I think it's a cool visualization.")
 if st.checkbox("Show me a graph of book ratings by genre"):
     st.altair_chart(bar, use_container_width=True)
 
