@@ -38,29 +38,30 @@ df = df.rename(columns={'author':'Author',
                'num_pages': 'Length','genres':'Genre', '5_star_ratings': '5-Star', '4_star_ratings': '4-Star', '3_star_ratings': '3-Star', '2_star_ratings': '2-Star', '1_star_ratings': '1-Star'})
 df=df.rename_axis('ID',axis="index")
 # Prep for a graph
-# Group and sort by average length
-genre_length = df.groupby('Genre')['Length'].mean().reset_index()
-genre_length = genre_length.sort_values('Length', ascending=False)
+# Group and sort by average rating
+genre_length = df.groupby('Genre')['avg_rating'].mean().reset_index()
+genre_length = genre_length.sort_values('avg_rating', ascending=False)
 
 # Build the chart
 bar = alt.Chart(genre_length).mark_bar().encode(
-    x=alt.X('Length:Q', title='Average Book Length'),
+    x=alt.X('avg_rating:Q', title='Average Book Rating'),
     y=alt.Y('Genre:N', sort='-x', title='Genre'),
-    color=alt.Color('Length:Q', scale=alt.Scale(scheme='darkmulti')),
-    tooltip=['Genre', 'Length']
+    color=alt.Color('avg_rating:Q', scale=alt.Scale(scheme='darkmulti')),
+    tooltip=['Genre', 'Average Rating']
 ).properties(
-    title='Average Book Length by Genre',
+    title='Average Book Rating by Genre',
     width=700,
     height=500
 )
-color = alt.Color('Length:Q', scale=alt.Scale(scheme='turbo')
+color = alt.Color('Length:Q', scale=alt.Scale(scheme='darkmulti')
                  )
 
 # Bar Graphs
 st.markdown("## 📊Bar Charts")
 if st.checkbox("Show me a graph of book lengths by genre"):
     st.bar_chart(df, x='Length',y='Genre')
-if st.checkbox("Show me a different graph of book lengths by genre"):
+    st.caption('Yes, I know that this isn't a true bar graph, but I think it's a cool visualization.')
+if st.checkbox("Show me a graph of book ratings by genre"):
     st.altair_chart(bar, use_container_width=True)
 
 #Scatter Plots & Altair
