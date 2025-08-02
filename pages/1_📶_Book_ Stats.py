@@ -53,8 +53,7 @@ bar = alt.Chart(genre_length).mark_bar().encode(
     width=700,
     height=500
 )
-color = alt.Color('Length:Q', scale=alt.Scale(scheme='darkmulti')
-                 )
+
 
 # Bar Graphs
 st.markdown("## 📊Bar Charts")
