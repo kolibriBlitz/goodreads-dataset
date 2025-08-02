@@ -37,15 +37,7 @@ df = df.rename(columns={'author':'Author',
                 'original_publication_year': 'Year',
                'num_pages': 'Length','genres':'Genre', '5_star_ratings': '5-Star', '4_star_ratings': '4-Star', '3_star_ratings': '3-Star', '2_star_ratings': '2-Star', '1_star_ratings': '1-Star'})
 df=df.rename_axis('ID',axis="index")
-
-# Bar Graphs
-st.markdown("## 📊Bar Charts")
-st.bar_chart(df, x='Length',y='Genre')
-
-#Scatter Plots & Altair
-st.markdown("## 🎲Scatter Plots")
-st.scatter_chart(df,x='Length',y='avg_rating',color='avg_rating')
-
+# Prep for a graph
 # Group and sort by average length
 genre_length = df.groupby('Genre')['Length'].mean().reset_index()
 genre_length = genre_length.sort_values('Length', ascending=False)
@@ -61,10 +53,23 @@ bar = alt.Chart(genre_length).mark_bar().encode(
     width=700,
     height=500
 )
-color = alt.Color('Length:Q', scale=alt.Scale(scheme='reds'))
+color = alt.Color('Length:Q', scale=alt.Scale(scheme='turbo')
+                 )
+
+# Bar Graphs
+st.markdown("## 📊Bar Charts")
+if st.checkbox("Show me a graph of book lengths by genre"):
+    st.bar_chart(df, x='Length',y='Genre')
+if st.checkbox("Show me a different graph of book lengths by genre"):
+    st.altair_chart(bar, use_container_width=True)
+
+#Scatter Plots & Altair
+st.markdown("## 🎲Scatter Plots")
+if st.checkbox("Show the graph"):
+    st.scatter_chart(df,x='Length',y='avg_rating',color='avg_rating')
 
 
-st.altair_chart(bar, use_container_width=True)
+
 
 # Interactive Charts
 st.markdown("## 🎮Interactive Graphs")
