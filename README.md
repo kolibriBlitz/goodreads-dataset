@@ -1,7 +1,9 @@
 # 📚 Goodreads dataset app
 
 ## Navigation
-- 
+- [code](): My kaggle notebooks, scraping script and Streamlit root code
+- [data](): The dataset files
+- [pages](): Streamlit app code for subpages
 
 ## Project Goals
 - Practice Python skills through hands-on, iterative querying.
