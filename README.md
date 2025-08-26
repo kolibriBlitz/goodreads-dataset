@@ -1,9 +1,9 @@
 # 📚 Goodreads dataset app
 
 ## Navigation
-- [code](): My kaggle notebooks, scraping script and Streamlit root code
-- [data](): The dataset files
-- [pages](): Streamlit app code for subpages
+- [code](https://github.com/kolibriBlitz/goodreads-dataset/tree/main/code): My kaggle notebooks, scraping script and Streamlit root code
+- [data](https://github.com/kolibriBlitz/goodreads-dataset/tree/main/data): The dataset files
+- [pages](https://github.com/kolibriBlitz/goodreads-dataset/tree/main/pages): Streamlit app code for subpages
 
 ## Project Goals
 - Practice Python skills through hands-on, iterative querying.
