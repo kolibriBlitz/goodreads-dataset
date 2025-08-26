@@ -11,7 +11,7 @@ OUTPUT_FILLED = "filled_pages.csv"
 OUTPUT_REVIEW = "low_confidence_review.csv"
 CONFIDENCE_THRESHOLD = 75  # auto-fill threshold
 SLEEP_BETWEEN_QUERIES = 0.2  # polite delay between Open Library calls
-GOOGLE_API_KEY = "AIzaSyAmkyIEQpivLoLkxSEcid6bnKQDeRjT88k"  # <<< put your real key here
+GOOGLE_API_KEY = "myAPIkey"  # security placeholder
 
 # Cache files ------------------------------------------------
 EDITION_CACHE_FILE = "edition_pagecount_cache.json"
@@ -257,3 +257,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
