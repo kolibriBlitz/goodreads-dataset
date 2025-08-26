@@ -17,10 +17,15 @@
 ## Methodology
 1. Getting to know you: Studied the dataset using ```df.head(), df.describe(), df.dtypes```. Established a plan of attack to transform the data into a usable foundation for a booklist app.
 2. Cleanliness is next to Godliness: Check data for anomalies and missing data to ensure accurate results.
+3. *to be continued...*
 
 
 ## Results and Insights
-1. Collaborated with ChatGPT to write a data scraping script to locate missing page lengths.
+- Collaborated with ChatGPT to write a data scraping script to locate missing page lengths.
+- Goodreads data is surprisingly messy given the structured look of the website and app.
+- Manga, comic books and independent authors had the greatest amount of missing data.
+- Data is imbalanced toward fiction.
+- *to be continued*
 
 ## Deliverables
 A simple Streamlit app showing book data from [Goodreads](https://www.kaggle.com/datasets/). 
